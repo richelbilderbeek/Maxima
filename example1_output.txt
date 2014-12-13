@@ -1,0 +1,2 @@
+Example how to write text
+to a file

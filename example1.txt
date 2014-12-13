@@ -1,0 +1,10 @@
+load("stringproc")$
+
+filename:"example1_output.txt"$
+
+stream: openw(filename)$
+
+/* A newline is denoted by ~% */
+printf(stream,"Example how to write text~%")$
+printf(stream,"to a file~%")$
+close(stream)$
