@@ -1,0 +1,34 @@
+load("stringproc")$
+filename:"write_plot_to_tex_file_output.tex"$
+
+F(x):= f(x) = (1*x^3) + (2*x^2) + (3*x) + 4;
+G(x):= g(x) = ''(diff(rhs(F(x)),x));
+
+plot2d(
+  rhs(SecSexRatio(a)),[a,0,1],[y,0,1],
+  [title,"Secondary sex ration for different male abortion rates"],
+  [xlabel,"a (fraction of male abortions)"],
+  [ylabel,"S: Secondary sex ratio"],
+  [png_file, "~/GitHubs/EvoTheory2014/tmp_plot_s.png"]
+);
+
+stream: openw(filename)$
+
+/* A newline is denoted by ~% */
+printf(stream,"\\documentclass[11]{article}~%")$
+printf(stream,"~%")$
+printf(stream,"\\begin{document}~%")$
+printf(stream,"~%")$
+printf(stream,"This is the formula for f:~%")$
+printf(stream,"~%")$
+/* tex(my_formula,false) writes the TeX formula to output */
+printf(stream,tex(F(x),false))$ 
+printf(stream,"~%")$
+printf(stream,"This is the formula for the derivative of f:~%")$
+printf(stream,"~%")$
+printf(stream,tex(G(x),false))$ 
+printf(stream,"~%")$
+printf(stream,"~%")$
+printf(stream,"\\end{document}~%")$
+
+close(stream)$

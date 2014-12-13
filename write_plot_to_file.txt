@@ -1,0 +1,42 @@
+load("stringproc")$
+
+filename:"write_plot_to_file_output.tex"$
+png_file_path:"/home/richel/GitHubs/Maxima/write_plot_to_file_output"$
+
+F(x):= f(x) = sin(x);
+
+plot2d(
+  rhs(F(x)),[x,-10,10],[y,-1,1],
+  [title,"Sine wave"],
+  [xlabel,"x (radians)"],
+  [ylabel,"y = sin(x)"],
+  [color,black],
+  [png_file,png_file_path]
+);
+
+stream: openw(filename)$
+
+/* A newline is denoted by ~% */
+printf(stream,"\\documentclass[11]{article}~%")$
+printf(stream,"~%")$
+printf(stream,"\\usepackage{graphicx}~%")$
+printf(stream,"~%")$
+printf(stream,"\\begin{document}~%")$
+printf(stream,"~%")$
+printf(stream,"This is the formula for f:~%")$
+printf(stream,"~%")$
+/* tex(my_formula,false) writes the TeX formula to output */
+printf(stream,tex(F(x),false))$ 
+printf(stream,"~%")$
+printf(stream,"This is the function plotted:~%")$
+printf(stream,"~%")$
+
+printf(stream,"\\includegraphics[scale=0.5]{\"")$
+printf(stream,png_file_path)$
+printf(stream,"\"}~%")$
+
+printf(stream,"~%")$
+printf(stream,"~%")$
+printf(stream,"\\end{document}~%")$
+
+close(stream)$

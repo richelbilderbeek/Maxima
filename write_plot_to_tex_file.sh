@@ -1,0 +1,2 @@
+maxima -b write_plot_to_tex_file.txt
+pdflatex write_plot_to_tex_file_output.tex
