@@ -1,0 +1,2 @@
+maxima -b write_derived_formula_to_tex_file.txt
+pdflatex write_derived_formula_to_tex_file_output.tex

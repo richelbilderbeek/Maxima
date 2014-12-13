@@ -1,0 +1,18 @@
+load("stringproc")$
+
+filename:"write_formula_to_tex_file_output.tex"$
+
+stream: openw(filename)$
+
+/* A newline is denoted by ~% */
+printf(stream,"\\documentclass[11]{article}~%")$
+printf(stream,"~%")$
+printf(stream,"\\begin{document}~%")$
+printf(stream,"~%")$
+printf(stream,"This is my first LaTeX document with the quadratic formula:~%")$
+printf(stream,"~%")$
+printf(stream,"$$x={-b\\pm\\sqrt{b^2-4ac} \\over 2a}$$~%")$
+printf(stream,"~%")$
+printf(stream,"\\end{document}~%")$
+
+close(stream)$
