@@ -1,0 +1,16 @@
+load("stringproc")$
+
+filename:"write_text_to_tex_file_output.tex"$
+
+stream: openw(filename)$
+
+/* A newline is denoted by ~% */
+printf(stream,"\\documentclass[11]{article}~%")$
+printf(stream,"~%")$
+printf(stream,"\\begin{document}~%")$
+printf(stream,"~%")$
+printf(stream,"This is my first LaTeX document.~%")$
+printf(stream,"~%")$
+printf(stream,"\\end{document}~%")$
+
+close(stream)$

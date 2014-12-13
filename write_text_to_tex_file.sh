@@ -1,0 +1,2 @@
+maxima -b write_text_to_tex_file.txt
+pdflatex write_text_to_tex_file_output.tex
