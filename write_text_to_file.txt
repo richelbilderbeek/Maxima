@@ -1,6 +1,6 @@
 load("stringproc")$
 
-filename:"example1_output.txt"$
+filename:"write_text_to_file_output.txt"$
 
 stream: openw(filename)$
 
