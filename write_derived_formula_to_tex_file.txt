@@ -1,13 +1,21 @@
+/* Maxima batch file */
+
+/* Load libraries */
 load("stringproc")$
+
+/* Output filename */
 filename:"write_derived_formula_to_tex_file_output.tex"$
 
+/* Do the calculations */
 F(x):= f(x) = (1*x^3) + (2*x^2) + (3*x) + 4;
 G(x):= g(x) = ''(diff(rhs(F(x)),x));
 
+/* Write results to TeX file */
 stream: openw(filename)$
-
 /* A newline is denoted by ~% */
-printf(stream,"\\documentclass[11]{article}~%")$
+printf(stream,"\\documentclass{article}~%")$
+printf(stream,"~%")$
+printf(stream,"\\usepackage{listings}~%")$
 printf(stream,"~%")$
 printf(stream,"\\begin{document}~%")$
 printf(stream,"~%")$
@@ -20,7 +28,15 @@ printf(stream,"This is the formula for the derivative of f:~%")$
 printf(stream,"~%")$
 printf(stream,tex(G(x),false))$ 
 printf(stream,"~%")$
+printf(stream,"\\appendix~%")$
+printf(stream,"~%")$
+printf(stream,"\\section{write\\_derived\\_formula\\_to\\_tex\\_file.sh}~%")$
+printf(stream,"~%")$
+printf(stream,"\\lstinputlisting[language=C++,showstringspaces=false,breaklines=true,frame=single]{write_derived_formula_to_tex_file.sh}~%")$
+printf(stream,"~%")$
+printf(stream,"\\section{write\\_derived\\_formula\\_to\\_tex\\_file.txt}~%")$
+printf(stream,"~%")$
+printf(stream,"\\lstinputlisting[language=C++,showstringspaces=false,breaklines=true,frame=single]{write_derived_formula_to_tex_file.txt}~%")$
 printf(stream,"~%")$
 printf(stream,"\\end{document}~%")$
-
 close(stream)$
