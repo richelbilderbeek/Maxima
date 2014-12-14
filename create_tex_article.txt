@@ -1,0 +1,156 @@
+/* Maxima batch file */
+
+/* Load libraries */
+load("stringproc")$
+
+/* Input filename */
+bash_filename:"create_tex_article.sh"$
+maxima_filename:"create_tex_article.txt"$ /* this file */
+
+/* Output filenames */
+tex_filename:"create_tex_article_output.tex"$
+plot2d_filename:"/home/richel/GitHubs/Maxima/create_tex_article_output_plot2d.pdf"$
+plot3d_filename:"/home/richel/GitHubs/Maxima/create_tex_article_output_plot3d.pdf"$
+
+/* Do the calculations */
+F(x):= f(x) = (1*x^3) + (2*x^2) + (3*x) + 4;
+G(x):= g(x) = ''(diff(rhs(F(x)),x));
+H(x,y):= h(x,y) = ''(rhs(F(x)) + rhs(G(y)) );
+
+plot2d(
+  rhs(G(x)),[x,-10,10],
+  [title,string(G(x))],
+  [xlabel,"x"],
+  [ylabel,"g(x)"],
+  [color,black],
+  [pdf_file,plot2d_filename]
+);
+
+plot3d(
+  rhs(H(x,y)),[x,-10,10],[y,-10,10],
+  [title,"h(x,y)"],
+  [xlabel,"x"],
+  [ylabel,"y"],
+  [zlabel,"z"],
+  [pdf_file,plot3d_filename]
+);
+
+/* Write results to TeX file */
+stream: openw(tex_filename)$
+printf(stream,"\\documentclass{article}~%")$
+printf(stream,"~%")$
+printf(stream,"\\usepackage{listings}~%")$
+printf(stream,"\\usepackage{graphicx}~%")$
+printf(stream,"~%")$
+printf(stream,"\\title{How to create a \\LaTeX~~document from a Maxima script}~%")$
+printf(stream,"\\author{Richel Bilderbeek}~%")$
+printf(stream,"\\date{\\today}~%")$
+printf(stream,"~%")$
+printf(stream,"\\begin{document}~%")$
+printf(stream,"~%")$
+printf(stream,"\\maketitle~%")$
+printf(stream,"~%")$
+printf(stream,"\\begin{abstract}~%")$
+printf(stream,"This article is created within the CAS program Maxima~%")$
+printf(stream,"and shows (1) algebraic differentiation (2) plotting, and (3) listings.~%")$
+printf(stream,"This article is self-containing: it can be recreated from the listings it contains.~%")$
+printf(stream,"The article itself is intended to be of~%")$
+printf(stream,"publishable quality, having (1) an abstract (2) a bibliography.~%")$
+printf(stream,"\\end{abstract}~%")$
+printf(stream,"~%")$
+printf(stream,"\\section{Introduction}~%")$
+printf(stream,"~%")$
+printf(stream,"\\LaTeX~~is commonly used for writing publishable scientific articles\\cite{gaudeul2006}.~%")$
+printf(stream,"Algebraic manipulations can be done by a CAS, for example Maxima, Maple or Mathematica.~%")$
+printf(stream,"Of these examples, Maxima is the only free and open-source program.~%")$
+printf(stream,"This article is an example of writing a \\LaTeX~~ article within Maxima~%")$
+printf(stream,"~%")$
+printf(stream,"\\section{Materials and methods}~%")$
+printf(stream,"~%")$
+printf(stream,"A script executes the process from Maxima file to \\LaTeX-formatted document in two steps.~%")$
+printf(stream,"The first step executes the Maxima script to create a \\LaTeX~~(.tex) file.~%")$
+printf(stream,"The second step converts the \\LaTeX~~file to Portable Document Format (.pdf).~%")$
+printf(stream,"The script does not require user intervention.~%")$
+printf(stream,"~%")$
+printf(stream,"The Maxima script consists out of two parts:~%")$
+printf(stream,"algebraic manipulations and \\LaTeX~~output~%")$
+printf(stream,"~%")$
+printf(stream,"The algebraic manipulations demonstrated are: ~%")$
+printf(stream,"(1) defining a function~%")$
+printf(stream,"(2) calculate its derivative and,~%")$
+printf(stream,"(3) plot this derivative.~%")$
+printf(stream,"~%")$
+printf(stream,"The second part uses these algebraic results to create a \\LaTeX~~(.tex) file.~%")$
+printf(stream,"It creates an article displaying the formula's, the single plot in~%")$
+printf(stream,"the Results section.~%")$
+printf(stream,"In the Appendix, it shows: ~%")$
+printf(stream,"(1) the bash script to create a PDF from the Maxima script~%")$
+printf(stream,"(2) the Maxima script~%")$
+printf(stream,"(3) the generated \\LaTeX~~code~%")$
+printf(stream,"~%")$
+printf(stream,"\\section{Results}~%")$
+printf(stream,"~%")$
+printf(stream,"Equation $f(x)$ used:~%")$
+printf(stream,"~%")$ 
+printf(stream,tex(F(x),false))$ 
+printf(stream,"~%")$
+printf(stream,"Equation $g(x)$ is the derivative of $f(x)$ with respect to $x$:~%")$
+printf(stream,"~%")$
+printf(stream,tex(G(x),false))$ 
+printf(stream,"~%")$
+
+printf(stream,"Equation $h(x,y) = f(x) + g(y)$, which equates to:~%")$
+printf(stream,"~%")$
+printf(stream,tex(H(x,y),false))$ 
+printf(stream,"~%")$
+
+printf(stream,"Plotting $g(x)$:~%")$
+printf(stream,"~%")$
+printf(stream,"\\fbox{\\includegraphics[scale=0.8]{")$
+printf(stream,plot2d_filename)$
+printf(stream,"}}~%")$
+printf(stream,"Plotting $h(x,y)$:~%")$
+printf(stream,"~%")$
+printf(stream,"\\fbox{\\includegraphics[scale=0.8]{")$
+printf(stream,plot3d_filename)$
+printf(stream,"}}~%")$
+printf(stream,"~%")$
+printf(stream,"\\section{Discussion}~%")$
+printf(stream,"~%")$
+printf(stream,"Writing \\LaTeX~~within Maxima can be done, but it is a bit cumbersome:~%")$
+printf(stream,"Maxima does not know \\LaTeX~~syntax and just creates contextless strings,~%")$
+printf(stream,"which might not be compilable by \\LaTeX.~%")$
+printf(stream,"However, because the script does create a .tex file,~%")$
+printf(stream,"this file can be inspected easily with a \\LaTeX~~tool like texmaker.~%")$
+printf(stream,"~%")$
+printf(stream,"\\begin{thebibliography}{9}~%")$
+printf(stream,"~%")$
+printf(stream,"\\bibitem{gaudeul2006}~%")$
+printf(stream,"  Gaudeul, A.~%")$
+printf(stream,"  2006~%")$
+printf(stream,"  Do Open Source Developers Respond to Competition?: The (La)TeX Case Study.~%")$
+printf(stream,"  Available at SSRN: http://ssrn.com/abstract=908946 or http://dx.doi.org/10.2139/ssrn.908946~%")$
+printf(stream,"\\end{thebibliography}~%")$
+printf(stream,"~%")$
+printf(stream,"\\appendix~%")$
+printf(stream,"~%")$
+printf(stream,"\\section{Script file}~%")$
+printf(stream,"~%")$
+printf(stream,"\\lstinputlisting[language=C++,showstringspaces=false,breaklines=true,frame=single]{")$
+printf(stream,bash_filename)$
+printf(stream,"}~%")$
+printf(stream,"~%")$
+printf(stream,"\\section{Maxima file}~%")$
+printf(stream,"~%")$
+printf(stream,"\\lstinputlisting[language=C++,showstringspaces=false,breaklines=true,frame=single]{")$
+printf(stream,maxima_filename)$
+printf(stream,"}~%")$
+printf(stream,"~%")$
+printf(stream,"\\section{\\LaTeX~~file}~%")$
+printf(stream,"~%")$
+printf(stream,"\\lstinputlisting[language=tex,showstringspaces=false,breaklines=true,frame=single]{")$
+printf(stream,tex_filename)$
+printf(stream,"}~%")$
+printf(stream,"~%")$
+printf(stream,"\\end{document}~%")$
+close(stream)$
