@@ -1,0 +1,109 @@
+/* Maxima batch file */
+
+/* Load libraries */
+load("stringproc")$
+
+/* Input filename */
+bash_filename:"create_tex_article_simple.sh"$
+maxima_filename:"create_tex_article_simple.txt"$ /* this file */
+
+/* Output filenames */
+tex_filename:"create_tex_article_simple_output.tex"$
+png_filename:"/home/richel/GitHubs/Maxima/create_tex_article_simple_output.png"$
+
+/* Do the calculations */
+F(x):= f(x) = (1*x^3) + (2*x^2) + (3*x) + 4;
+G(x):= g(x) = ''(diff(rhs(F(x)),x));
+plot2d(
+  rhs(G(x)),[x,-10,10],
+  [title,string(G(x))],
+  [xlabel,"x"],
+  [ylabel,"g(x)"],
+  [color,black],
+  [png_file,png_filename]
+);
+
+/* Write results to TeX file */
+stream: openw(tex_filename)$
+printf(stream,"\\documentclass{article}~%")$
+printf(stream,"~%")$
+printf(stream,"\\usepackage{listings}~%")$
+printf(stream,"\\usepackage{graphicx}~%")$
+printf(stream,"~%")$
+printf(stream,"\\begin{document}~%")$
+printf(stream,"~%")$
+printf(stream,"\\begin{abstract}~%")$
+printf(stream,"This article is created within the CAS program Maxima.~%")$
+printf(stream,"and shows (1) algebraic differentiation (2) plotting, and (3) listings,~%")$
+printf(stream,"which are believed to be the most commonly used aspects of an article.~%")$
+printf(stream,"\\end{abstract}~%")$
+printf(stream,"~%")$
+printf(stream,"\\section{Introduction}~%")$
+printf(stream,"~%")$
+printf(stream,"Writing scientific articles is commonly done with \\LaTeX.~%")$
+printf(stream,"Algebraic manipulations can be done by a CAS, for example Maxima, Maple or Mathematica.~%")$
+printf(stream,"Of these examples, Maxima is the only free and open-source program.~%")$
+printf(stream,"Would it be possible to write a \\LaTeX article within Maxima?~%")$
+printf(stream,"If yes, would it be elegant enough?~%")$
+printf(stream,"~%")$
+printf(stream,"\\section{Materials and methods}~%")$
+printf(stream,"~%")$
+printf(stream,"A script executes the process from Maxima file to \\LaTeX-formatted document in two steps.~%")$
+printf(stream,"The first step executes the Maxima script to create a \\LaTeX (.tex) file.~%")$
+printf(stream,"The second step converts the \\LaTeX file to Portable Document Format (.pdf).~%")$
+printf(stream,"The script does not require user intervention.~%")$
+printf(stream,"~%")$
+printf(stream,"The Maxima script consists out of two parts:~%")$
+printf(stream,"algebraic manipulations and \\LaTeX output~%")$
+printf(stream,"~%")$
+printf(stream,"The algebraic manipulations demonstrated are: ~%")$
+printf(stream,"(1) defining a function~%")$
+printf(stream,"(2) calculate its derivative and,~%")$
+printf(stream,"(3) plot this derivative.~%")$
+printf(stream,"~%")$
+printf(stream,"The second part uses these algebraic results to create a \\LaTeX (.tex) file.~%")$
+printf(stream,"It creates an article displaying the formula's, the single plot in~%")$
+printf(stream,"the Results section.~%")$
+printf(stream,"In the Appendix, it shows: ~%")$
+printf(stream,"(1) the bash script to create a PDF from the Maxima script~%")$
+printf(stream,"(2) the Maxima script~%")$
+printf(stream,"(3) the generated \\LaTeX code~%")$
+printf(stream,"~%")$
+printf(stream,"\\section{Results}~%")$
+printf(stream,"~%")$
+printf(stream,"This is the formula for f:~%")$
+printf(stream,"~%")$
+printf(stream,tex(F(x),false))$ 
+printf(stream,"~%")$
+printf(stream,"This is the formula for g, the derivative of f to x:~%")$
+printf(stream,"~%")$
+printf(stream,tex(G(x),false))$ 
+printf(stream,"~%")$
+printf(stream,"Which looks plotted as such:~%")$
+printf(stream,"~%")$
+printf(stream,"\\includegraphics[scale=0.5]{")$
+printf(stream,png_filename)$
+printf(stream,"}~%")$
+printf(stream,"~%")$
+printf(stream,"\\appendix~%")$
+printf(stream,"~%")$
+printf(stream,"\\section{Script file}~%")$
+printf(stream,"~%")$
+printf(stream,"\\lstinputlisting[language=C++,showstringspaces=false,breaklines=true,frame=single]{")$
+printf(stream,bash_filename)$
+printf(stream,"}~%")$
+printf(stream,"~%")$
+printf(stream,"\\section{Maxima file}~%")$
+printf(stream,"~%")$
+printf(stream,"\\lstinputlisting[language=C++,showstringspaces=false,breaklines=true,frame=single]{")$
+printf(stream,maxima_filename)$
+printf(stream,"}~%")$
+printf(stream,"~%")$
+printf(stream,"\\section{\\LaTeX file}~%")$
+printf(stream,"~%")$
+printf(stream,"\\lstinputlisting[language=tex,showstringspaces=false,breaklines=true,frame=single]{")$
+printf(stream,tex_filename)$
+printf(stream,"}~%")$
+printf(stream,"~%")$
+printf(stream,"\\end{document}~%")$
+close(stream)$
