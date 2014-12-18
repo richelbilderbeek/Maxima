@@ -1,0 +1,1 @@
+maxima -b if.txt

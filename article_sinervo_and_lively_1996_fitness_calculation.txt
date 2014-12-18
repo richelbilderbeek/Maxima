@@ -4,36 +4,67 @@
 load("stringproc")$
 
 /* Input filename */
-bash_filename:"create_tex_article.sh"$
-maxima_filename:"create_tex_article.txt"$ /* this file */
+bash_filename:"article_sinervo_and_lively_1996_fitness_calculation.sh"$
+maxima_filename:"article_sinervo_and_lively_1996_fitness_calculation.txt"$ /* this file */
 
 /* Output filenames */
-tex_filename:"create_tex_article_output.tex"$
-plot2d_filename:"/home/richel/GitHubs/Maxima/create_tex_article_output_plot2d.pdf"$
-plot3d_filename:"/home/richel/GitHubs/Maxima/create_tex_article_output_plot3d.pdf"$
+tex_filename:"article_sinervo_and_lively_1996_output.tex"$
+plot_filename:"/home/richel/GitHubs/Maxima/article_sinervo_and_lively_1996_fitness_calculation_output.pdf"$
 
 /* Do the calculations */
-F(x):= f(x) = (0.0001*(x^4)) - (0.001*(x^3)) + (0.01*(x^2)) - (0.1*x) + 1;
-G(x):= g(x) = ''(diff(rhs(F(x)),x));
-H(x,y):= h(x,y) = ''(rhs(F(x)) + rhs(G(y)) );
+/*
+Fitness values esimated from figure 2 from Sinervo & Lively (1996) Nature:
 
-plot2d(
-  rhs(G(x)),[x,-10,10],
-  [title,string(G(x))],
-  [xlabel,"x"],
-  [ylabel,"g(x)"],
-  [color,black],
-  [pdf_file,plot2d_filename]
+Monopoly:
+Year    Yellow  Blue    Orange
+1991    0.3     0.5     2.2
+1992    0.5     0.8     0.8
+1993    0.45    0.35    0.45
+1994    0.1     0.35    0.55
+1995    0.1     0.05    1
+
+Shared:
+Year    Yellow  Blue    Orange
+1991    0.4     0.2     0.3
+1992    0.2     0.3     0.3
+1993    0.45    0.25    0.3
+1994    0.8     0.6     0.8
+1995    0.65    0.6     1
+
+Frequencies:
+Year    Yellow  Blue    Orange
+1991    0.126   0.75    0.124
+1992    0.361   0.328   0.311
+1993    0.42    0.321   0.259
+1994    0.485   0.389   0.126
+1995    0.35    0.551   0.099
+
+Fitness values:
+Year    Yellow  Blue    Orange
+1991    1.61    1.00    4.73
+1992    1.45    1.00    1.28
+1994    1.00    1.26    0.90
+
+*/
+
+years:transpose(matrix([1991,1992,1993,1994,1995]));
+
+monopoly_fitness:matrix(
+  [0.30,0.50,2.20],
+  [0.50,0.80,0.80],
+  [0.45,0.35,0.45],
+  [0.10,0.35,0.55],
+  [0.10,0.05,1,00]
 );
 
-plot3d(
-  rhs(H(x,y)),[x,-10,10],[y,-10,10],
-  [title,"h(x,y)"],
-  [xlabel,"x"],
-  [ylabel,"y"],
-  [zlabel,"z"],
-  [pdf_file,plot3d_filename]
+shared_fitness:matrix(
+  [0.40,0.20,0.3],
+  [0.20,0.30,0.3],
+  [0.45,0.25,0.3],
+  [0.80,0.60,0.8],
+  [0.65,0.60,1.0]
 );
+
 
 /* Write results to TeX file */
 stream: openw(tex_filename)$
@@ -42,7 +73,7 @@ printf(stream,"~%")$
 printf(stream,"\\usepackage{listings}~%")$
 printf(stream,"\\usepackage{graphicx}~%")$
 printf(stream,"~%")$
-printf(stream,"\\title{How to create a \\LaTeX~~document from a Maxima script}~%")$
+printf(stream,"\\title{Elucidating the fitness calculation by Sinervo and Lively}~%")$
 printf(stream,"\\author{Richel Bilderbeek}~%")$
 printf(stream,"\\date{\\today}~%")$
 printf(stream,"~%")$
@@ -52,22 +83,19 @@ printf(stream,"\\maketitle~%")$
 printf(stream,"~%")$
 printf(stream,"\\begin{abstract}~%")$
 printf(stream,"This article is created within the CAS program Maxima~%")$
-printf(stream,"and shows (1) algebraic differentiation (2) plotting, and (3) listings.~%")$
-printf(stream,"This article is self-containing: it can be recreated from the listings it contains.~%")$
-printf(stream,"The article itself is intended to be of~%")$
-printf(stream,"publishable quality, having (1) an abstract (2) a bibliography.~%")$
+printf(stream,"and tries to elucidate the fitness calculation by Sinervo and Lively\\cite{sinervo_and_lively1996}.~%")$
 printf(stream,"\\end{abstract}~%")$
 printf(stream,"~%")$
 printf(stream,"\\section{Introduction}~%")$
 printf(stream,"~%")$
-printf(stream,"\\LaTeX~~is commonly used for writing publishable scientific articles\\cite{gaudeul2006}.~%")$
-printf(stream,"Algebraic manipulations can be done by a CAS, for example Maxima, Maple or Mathematica.~%")$
-printf(stream,"Maxima is the only free and open-source program, and it is the oldest free and open-source computer algebra system, with development started in 1967 (as Macsyma) or 1982 (as MAXIMA).~%")$
 printf(stream,"This article is an example of writing a \\LaTeX~~ article within Maxima~%")$
 printf(stream,"~%")$
 printf(stream,"\\section{Materials and methods}~%")$
 printf(stream,"~%")$
-printf(stream,"A script executes the process from Maxima file to \\LaTeX-formatted document in two steps.~%")$
+
+
+
+printf(stream,"From figure 2 the following .~%")$
 printf(stream,"The first step executes the Maxima script to create a \\LaTeX~~(.tex) file.~%")$
 printf(stream,"The second step converts the \\LaTeX~~file to Portable Document Format (.pdf).~%")$
 printf(stream,"The script does not require user intervention.~%")$

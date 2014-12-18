@@ -1,0 +1,3 @@
+m: matrix([a,b],[c,d]);
+n: matrix([e,f],[g,h]);
+p: m.n;
