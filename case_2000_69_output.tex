@@ -43,41 +43,57 @@ This article is an example of writing a \LaTeX~ article within Maxima
   \label{table:table_definition}
 \end{table}
 
-(for definitions see table \ref{table:table_definition} on page \pageref{table:table_definition}).
-
-The equation to solve, equation 3.21 is:
+The equations to solve are:
 \begin{equation}
-x\,L=x\,\lambda\end{equation}
-The Leslie matrix, L,  given is:
+x\,L=x\,\lambda\label{eq:eq3_21}
+\end{equation}
+\begin{equation}
+x\,M=Z\label{eq:eq3_23}
+\end{equation}
 
-$$\pmatrix{1.0&1.0\cr 0.8&0.8\cr }$$
+Equation \ref{eq:eq3_21} equals equation 3.21 of \cite{case2000}
+Equation \ref{eq:eq3_23} equals equation 3.23 of \cite{case2000}
+(for definitions see table \ref{table:table_definition} on page \pageref{table:table_definition}).
+The Leslie matrix, L,  given in this exercise is:
 
-The simplifies equation 3.21 to:
+\begin{equation}
+L=\pmatrix{1.0&1.0\cr 0.8&0.8\cr }\end{equation}
 
-$$\pmatrix{1.0\,x&1.0\,x\cr 0.8\,x&0.8\,x\cr }=x\,\lambda$$
+The simplifies equation \ref{eq:eq3_21} to:
 
-Solving equation 3.21 can be done with equation 3.24:
+\begin{equation}
+\pmatrix{1.0\,x&1.0\,x\cr 0.8\,x&0.8\,x\cr }=x\,\lambda\end{equation}
 
-$$det(L - \lambda*I) = Z$$
+Solving equation \ref{eq:eq3_21} can be done with equation \ref{eq:eq3_24}:
 
-Where I is the identity matrix:
-$$\pmatrix{1&0\cr 0&1\cr }$$
+\begin{equation}
+det(L - \lambda*I) = Z
+\label{eq:eq3_24}
+\end{equation}
+
+Equation \ref{eq:eq3_24} equals equation 3.24 of \cite{case2000},
+where I is the identity matrix:
+\begin{equation}
+I=\pmatrix{1&0\cr 0&1\cr }\end{equation}
 And Z is the vector of zeroes:
-$$\pmatrix{0\cr 0\cr }$$
+\begin{equation}
+Z=\pmatrix{0\cr 0\cr }\end{equation}
 
-This simplifies equation 3.24 to:
+This simplifies equation \ref{eq:eq3_24} to:
 
-$${\it det}\left(\pmatrix{1.0-\lambda&1.0\cr 0.8&0.8-\lambda\cr }
- \right)=\pmatrix{0\cr 0\cr }$$
+\begin{equation}
+{\it det}\left(\pmatrix{1.0-\lambda&1.0\cr 0.8&0.8-\lambda\cr }\right)=\pmatrix{0\cr 0\cr }\end{equation}
 
 
 The determinant of that matrix ($M$), is:
-$$\left(0.8-\lambda\right)\,\left(1.0-\lambda\right)-0.8$$
+\begin{equation}
+det(\pmatrix{1.0-\lambda&1.0\cr 0.8&0.8-\lambda\cr })=\left(0.8-\lambda\right)\,\left(1.0-\lambda\right)-0.8\end{equation}
 
 
 Solving $M=0$, the $\lambda$s found are:
 
-$$\left[ \lambda={{9}\over{5}} , \lambda=0 \right] $$
+\begin{equation}
+\left[ \lambda={{9}\over{5}} , \lambda=0 \right] \end{equation}
 
 There is one stable population structure, $\lambda=0$, which is
 denotes an extinct population.
@@ -85,38 +101,50 @@ Here I focus on the more interesting value,
 where $\lambda=9/5$.
 This lambda is called the dominant eigenvalue, which equals the ultimate population growth.
 
-Results in M:
-$$\pmatrix{-0.8&1.0\cr 0.8&-1.0\cr }$$
+Put $\lambda$ in M, this results in:
+\begin{equation}
+M=\pmatrix{-0.8&1.0\cr 0.8&-1.0\cr }\end{equation}
 
-Solving 3.23: $M * x = Z$:
+Now we can solve the $x$ of equation \ref{eq:eq3_23} (equals 3.23 from \cite{case2000}),
+which was this:
 
-Create a population vector, $x$, with $1.0$ as an initial value
+\begin{equation}
+x\,M=Z\end{equation}
+
+This equation is unsolvable, unless we assign a value to an element of $x$.
+Here, I put $1.0$ as the initial value of $x$ its first element.
 (it will be rescaled later):
 
-$$\pmatrix{1.0\cr {\it x_2}\cr }$$
-Now $M * x$ simplifies to:
-$$\pmatrix{1.0\,{\it x_2}-0.8\cr 0.8-1.0\,{\it x_2}\cr }$$
-Solving this, 3.23: $M * x = Z$, there are two equations that can be solved:
-$$\pmatrix{1.0\,{\it x_2}-0.8\cr 0.8-1.0\,{\it x_2}\cr }=\pmatrix{0
- \cr 0\cr }$$
+\begin{equation}
+x = \pmatrix{1.0\cr {\it x_2}\cr }\end{equation}
+Putting this $x$ in equation \ref{eq:eq3_23}:
+\begin{equation}
+M * x = \pmatrix{1.0\,{\it x_2}-0.8\cr 0.8-1.0\,{\it x_2}\cr }= \pmatrix{0\cr 0\cr }\end{equation}
+As our matrix has two rows, there are two equations that can be solved:
 Solving the upper, results in $x2=4/5$.
 This results in an $x$ of:
-$$\pmatrix{1.0\cr {{4}\over{5}}\cr }$$
+\begin{equation}
+x = \pmatrix{1.0\cr {{4}\over{5}}\cr }\end{equation}
 $x$ must be rescaled so that its sum equals $1.0$.
 $x$ its current sum is $1.8$, so dividing all elements by it, results in an $x$ of:
-$$\pmatrix{0.55555555555555\cr 0.44444444444444\cr }$$
+\begin{equation}
+x = \pmatrix{0.55555555555555\cr 0.44444444444444\cr }\end{equation}
 \section{Conclusion}
 
 For this Leslie matrix:
-$$\pmatrix{1.0&1.0\cr 0.8&0.8\cr }$$
+\begin{equation}
+\pmatrix{1.0&1.0\cr 0.8&0.8\cr }\end{equation}
 
 The dominant eigenvalue, $\lambda$, is:
 \\\\
-9/5\\
+\begin{equation}
+\lambda = 9/5\end{equation}
+\\
 
 The stable population size distribution is:
 
-$$\pmatrix{0.55555555555555\cr 0.44444444444444\cr }$$
+\begin{equation}
+x = \pmatrix{0.55555555555555\cr 0.44444444444444\cr }\end{equation}
 
 \section{Discussion}
 

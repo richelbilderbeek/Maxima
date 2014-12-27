@@ -57,78 +57,89 @@ printf(stream,"  \\caption{Definitions}~%")$
 printf(stream,"  \\label{table:table_definition}~%")$
 printf(stream,"\\end{table}~%")$
 printf(stream,"~%")$
-printf(stream,"(for definitions see table \\ref{table:table_definition} on page \\pageref{table:table_definition}).~%")$
-printf(stream,"~%")$
-printf(stream,"The equation to solve, equation 3.21 is:~%")$
+printf(stream,"The equations to solve are:~%")$
 
 Eq3_21(L,x,lambda) := L * x = lambda * x;
 
 printf(stream,"\\begin{equation}~%")$
-printf(stream,tex1(Eq3_21(L,x,lambda)))$
+printf(stream,tex1(Eq3_21(L,x,lambda)))$ /* Use tex1 instead of tex(...,false) for non $$-enclosed output */
+printf(stream,"\\label{eq:eq3_21}~%")$
 printf(stream,"\\end{equation}~%")$
 
-printf(stream,"The Leslie matrix, L,  given is:~%")$
+Eq3_23(M,x,Z) := M * x = Z;
+Eq3_23_str:tex1(Eq3_23(M,x,Z));
+
+printf(stream,"\\begin{equation}~%")$
+printf(stream,tex1(Eq3_23(M,x,Z)))$ /* Use tex1 instead of tex(...,false) for non $$-enclosed output */
+printf(stream,"\\label{eq:eq3_23}~%")$
+printf(stream,"\\end{equation}~%")$
+
+printf(stream,"~%")$
+printf(stream,"Equation \\ref{eq:eq3_21} equals equation 3.21 of \\cite{case2000}~%")$
+printf(stream,"Equation \\ref{eq:eq3_23} equals equation 3.23 of \\cite{case2000}~%")$
+printf(stream,"(for definitions see table \\ref{table:table_definition} on page \\pageref{table:table_definition}).~%")$
+printf(stream,"The Leslie matrix, L,  given in this exercise is:~%")$
 printf(stream,"~%")$
 
 L:matrix([1.0,1.0],[0.8,0.8]);
 
-printf(stream,tex(L,false))$
+printf(stream,"\\begin{equation}~%")$
+printf(stream,"L=")$
+printf(stream,tex1(L))$
+printf(stream,"\\end{equation}~%")$
 printf(stream,"~%")$
-printf(stream,"The simplifies equation 3.21 to:~%")$
+printf(stream,"The simplifies equation \\ref{eq:eq3_21} to:~%")$
 printf(stream,"~%")$
-printf(stream,tex(Eq3_21(L,x,lambda),false))$
+printf(stream,"\\begin{equation}~%")$
+printf(stream,tex1(Eq3_21(L,x,lambda)))$
+printf(stream,"\\end{equation}~%")$
 printf(stream,"~%")$
-printf(stream,"Solving equation 3.21 can be done with equation 3.24:~%")$
+printf(stream,"Solving equation \\ref{eq:eq3_21} can be done with equation \\ref{eq:eq3_24}:~%")$
 printf(stream,"~%")$
-printf(stream,"$$det(L - \\lambda*I) = Z$$~%")$
+printf(stream,"\\begin{equation}~%")$
+printf(stream,"det(L - \\lambda*I) = Z~%")$
+printf(stream,"\\label{eq:eq3_24}~%")$
+printf(stream,"\\end{equation}~%")$
 printf(stream,"~%")$
 
 I:ident(2);
 Z:zeromatrix(2,1);
 
-printf(stream,"Where I is the identity matrix:~%")$
-printf(stream,tex(I,false))$
+printf(stream,"Equation \\ref{eq:eq3_24} equals equation 3.24 of \\cite{case2000},~%")$
+printf(stream,"where I is the identity matrix:~%")$
+printf(stream,"\\begin{equation}~%")$
+printf(stream,"I=")$
+printf(stream,tex1(I))$
+printf(stream,"\\end{equation}~%")$
 printf(stream,"And Z is the vector of zeroes:~%")$
-printf(stream,tex(Z,false))$
+printf(stream,"\\begin{equation}~%")$
+printf(stream,"Z=")$
+printf(stream,tex1(Z))$
+printf(stream,"\\end{equation}~%")$
 printf(stream,"~%")$
 
 Eq3_24(L,lambda,I,Z) := det(L - lambda * I) = Z;
 
-printf(stream,"This simplifies equation 3.24 to:~%")$
+printf(stream,"This simplifies equation \\ref{eq:eq3_24} to:~%")$
 printf(stream,"~%")$
-printf(stream,tex(Eq3_24(L,lambda,I,Z),false))$
+printf(stream,"\\begin{equation}~%")$
+printf(stream,tex1(Eq3_24(L,lambda,I,Z)))$
+printf(stream,"\\end{equation}~%")$
 printf(stream,"~%")$
 
-/*
-printf(stream,"Here I define $M$ as:~%")$
-
-Eq3_24_b(L,lambda,I) := M = L - lambda * I;
-printf(stream,tex(Eq3_24_b(L,lambda,I),false))$
-
-*/
 /* Great that M is in Eq3_24_b, but I cannot get it out, so I do it manually*/
 M:copymatrix(L);
 M[1][1] : M[1][1] - lambda;
 M[2][2] : M[2][2] - lambda;
 
-/*
-
-printf(stream,tex(M,false))$
-printf(stream,"~%")$
-printf(stream,"Solving for which $\\lambda$ equation 3.24 holds:~%")$
-printf(stream,"~%")$
-printf(stream,"$$det(L - \\lambda*I) = Z$$~%")$
-printf(stream,"$$det(M) = Z$$~%")$
-printf(stream,"~%")$
-printf(stream,"'det' denotes taking the determinant, L is the Leslie matrix, I is an identity matrix~%")$
-printf(stream,"and Z is a vector of all zeroes. M already has been calculated, so the equation becomes:~%")$
-printf(stream,"~%")$
-printf(stream,"$$det(M) = Z$$~%")$
-*/
-
 printf(stream,"~%")$
 printf(stream,"The determinant of that matrix ($M$), is:~%")$
-printf(stream,tex(determinant(M),false))$
+printf(stream,"\\begin{equation}~%")$
+printf(stream,"det(")$
+printf(stream,tex1(M))$
+printf(stream,")=")$
+printf(stream,tex1(determinant(M)))$
+printf(stream,"\\end{equation}~%")$
 printf(stream,"~%")$
 
 stable_lambdas : solve(determinant(M) = 0,lambda);
@@ -136,7 +147,9 @@ stable_lambdas : solve(determinant(M) = 0,lambda);
 printf(stream,"~%")$
 printf(stream,"Solving $M=0$, the $\\lambda$s found are:~%")$
 printf(stream,"~%")$
-printf(stream,tex(stable_lambdas,false))$
+printf(stream,"\\begin{equation}~%")$
+printf(stream,tex1(stable_lambdas))$
+printf(stream,"\\end{equation}~%")$
 printf(stream,"~%")$
 printf(stream,"There is one stable population structure, $\\lambda=0$, which is~%")$
 printf(stream,"denotes an extinct population.~%")$
@@ -152,24 +165,43 @@ printf(stream,"~%")$
 
 M:''(M); /* Filling it in */
 
-printf(stream,"Results in M:~%")$
-printf(stream,tex(M,false))$
+printf(stream,"Put $\\lambda$ in M, this results in:~%")$
+printf(stream,"\\begin{equation}~%")$
+printf(stream,"M=")$
+printf(stream,tex1(M))$
+printf(stream,"\\end{equation}~%")$
 printf(stream,"~%")$
 
-printf(stream,"Solving 3.23: $M * x = Z$:~%")$
+
+printf(stream,"Now we can solve the $x$ of equation \\ref{eq:eq3_23} (equals 3.23 from \\cite{case2000}),~%")$
+printf(stream,"which was this:~%")$
 printf(stream,"~%")$
-printf(stream,"Create a population vector, $x$, with $1.0$ as an initial value~%")$
+printf(stream,"\\begin{equation}~%")$
+printf(stream,Eq3_23_str)$
+printf(stream,"\\end{equation}~%")$
+printf(stream,"~%")$
+printf(stream,"This equation is unsolvable, unless we assign a value to an element of $x$.~%")$
+printf(stream,"Here, I put $1.0$ as the initial value of $x$ its first element.~%")$
 printf(stream,"(it will be rescaled later):~%")$
 printf(stream,"~%")$
 
 x:transpose(matrix([1.0,x2]));
+
+printf(stream,"\\begin{equation}~%")$
+printf(stream,"x = ")$
+printf(stream,tex1(x))$
+printf(stream,"\\end{equation}~%")$
+
 EqSolve(M,x,Z):= M.x = Z;
 
-printf(stream,tex(x,false))$
-printf(stream,"Now $M * x$ simplifies to:~%")$
-printf(stream,tex(lhs(EqSolve(M,x,Z)),false))$
-printf(stream,"Solving this, 3.23: $M * x = Z$, there are two equations that can be solved:~%")$
-printf(stream,tex(EqSolve(M,x,Z),false))$
+printf(stream,"Putting this $x$ in equation \\ref{eq:eq3_23}:~%")$
+printf(stream,"\\begin{equation}~%")$
+printf(stream,"M * x = ")$
+printf(stream,tex1(lhs(EqSolve(M,x,Z))))$
+printf(stream,"= ")$
+printf(stream,tex1(Z))$
+printf(stream,"\\end{equation}~%")$
+printf(stream,"As our matrix has two rows, there are two equations that can be solved:~%")$
 
 q:''(M.x)[1,1];
 x2:rhs(solve(q)[1]);
@@ -182,7 +214,10 @@ printf(stream,"This results in an $x$ of:~%")$
 x;
 x:''(x);
 
-printf(stream,tex(x,false))$
+printf(stream,"\\begin{equation}~%")$
+printf(stream,"x = ")$
+printf(stream,tex1(x))$
+printf(stream,"\\end{equation}~%")$
 printf(stream,"$x$ must be rescaled so that its sum equals $1.0$.~%")$
 
 sz: matrix_size(x);
@@ -195,23 +230,34 @@ printf(stream,"$, so dividing all elements by it, results in an $x$ of:~%")$
 x:x/my_sum;
 x;
 
-printf(stream,tex(x,false))$
+printf(stream,"\\begin{equation}~%")$
+printf(stream,"x = ")$
+printf(stream,tex1(x))$
+printf(stream,"\\end{equation}~%")$
 
 /* Conclusion */
 
 printf(stream,"\\section{Conclusion}~%")$
 printf(stream,"~%")$
 printf(stream,"For this Leslie matrix:~%")$
-printf(stream,tex(L,false))$
+printf(stream,"\\begin{equation}~%")$
+printf(stream,tex1(L))$
+printf(stream,"\\end{equation}~%")$
 printf(stream,"~%")$
 printf(stream,"The dominant eigenvalue, $\\lambda$, is:~%")$
 printf(stream,"\\\\\\\\~%")$
+printf(stream,"\\begin{equation}~%")$
+printf(stream,"\\lambda = ")$
 printf(stream,string(lambda))$ /* Don't forget the string function */
+printf(stream,"\\end{equation}~%")$
 printf(stream,"\\\\~%")$
 printf(stream,"~%")$
 printf(stream,"The stable population size distribution is:~%")$
 printf(stream,"~%")$
-printf(stream,tex(x,false))$
+printf(stream,"\\begin{equation}~%")$
+printf(stream,"x = ")$
+printf(stream,tex1(x))$
+printf(stream,"\\end{equation}~%")$
 printf(stream,"~%")$
 
 /* Discussion */
