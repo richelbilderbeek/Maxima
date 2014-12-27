@@ -1,0 +1,68 @@
+/* From the tutorial */
+linsolve( [ 3*x + 4*y = 7, 2*x + a*y = 13], [x,y]);
+
+/* Same, but use equations */
+
+F(x,y) := 3*x + 4*y = 7;
+G(x,y) := 2*x + a*y = 13;
+
+linsolve( [ F(x,y), G(x,y)], [x,y]);
+
+/* Use other equations */
+
+F(x,y) := 4*x + 4*y - 7 = x;
+G(x,y) := 2*x + ((a+1)*y) - 13 = y;
+
+linsolve( [ F(x,y), G(x,y)], [x,y]);
+
+/* Fill in a */
+a:11;
+linsolve( [ F(x,y), G(x,y)], [x,y]);
+kill(a);
+
+/* Use other equations that can be put in matrix */
+
+F(x,y) := (-6*x) + ( 3*y) = x;
+G(x,y) := ( 7*x) + (-2*y) = y;
+
+linsolve( [ F(x,y), G(x,y)], [x,y]);
+
+/*
+
+Solve a matrix multiplication:
+
+( -6  3)    (x)   (y)
+(  7 -2)  . (y) = (y)
+
+Equations: 
+  -6x + 3y = x
+   7x - 2y = y
+   
+Solution: x = 3, y = 7
+
+*/
+
+m: matrix([4,4],[7,-2]);
+n: matrix([x],[y]);
+p: m.n;
+q: p - n;
+
+eqns : [(-6*x) + (3*y) = x, (7*x) - (2*y) = y];
+linsolve(eqns,[x,y]);
+
+
+listofeqs:  [p[1],p[2]];
+listofvars: [x,y];
+solve(listofeqs, listofvars);
+
+linsolve(listofeqs,listofvars);
+
+
+listofeqs:  [p[1] = n[1],p[2] = n[2]];
+listofvars: [x,y];
+solve(listofeqs, listofvars);
+
+eqns : makelist(p[i],i,1,2);
+listofvars: [x,y];
+linsolve(eqns,n);
+solve(eqns, listofvars);

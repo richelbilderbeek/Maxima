@@ -1,0 +1,75 @@
+/* 
+
+Follows 
+
+Ted J. Case. An illustrated guide to theoretical biology. 2000. 
+
+Chapter 3, page 69
+
+*/
+kill(all);
+
+/* Leslie matrix */
+L:matrix([1.0,1.0],[0.8,0.8]);
+
+/* 
+Subtract lambda from all elements on the diagonal 
+l: lambda 
+*/
+
+M:L;
+M[1][1] : M[1][1] - l;
+M[2][2] : M[2][2] - l;
+M;
+
+/* Calculate for which lambda the determinant of M is zero */
+stable_lambdas : solve(determinant(M) = 0,l);
+
+/* this lambda is called the dominant eigenvalue, which equals the ultimate population growth */
+l:rhs(stable_lambdas[1]);
+M;
+M:''(M);
+
+/* 
+
+Now we must solve 3.23: (L-lambda*I)*x = Z 
+Z: a vector filled with zeroes
+L: Leslie matrix
+lambda: dominant eigenvalue
+I: indentity matrix
+x: population sizes that can remain constant
+
+( [. .]            [1 0] )
+( [. .] - lambda * [0 1] ) * x = Z
+
+As a trick, set x its first element to 1, otherwise the equations become unsolvable
+
+( [. .]            [1 0] )   [1]   [0]
+( [. .] - lambda * [0 1] ) * [.] = [0]
+
+This is equal to
+
+M * x = Z
+
+*/
+
+x:transpose(matrix([1.0,x2]));
+
+q:''(M.x)[1,1];
+x2:rhs(solve(q)[1]);
+x;
+x:''(x);
+
+/* Vector x must have its values lowered, so its sum is one */
+sz:matrix_size(x);
+my_sum:sum(sum(x[i,j],i,1,sz[1]),j,1,sz[2]);
+my_sum;
+x:x/my_sum;
+x;
+
+
+Z:zeromatrix(2,1);
+S(x2):= M.x = Z;
+S(x2):= ''(M).x = ''(Z);
+solve(S(x2),x2);
+solve(S(x2),x2);
