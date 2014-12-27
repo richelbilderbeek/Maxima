@@ -1,75 +1,269 @@
-/* 
+/* Maxima batch file */
 
-Follows 
+/* Load libraries */
+load("stringproc")$
 
-Ted J. Case. An illustrated guide to theoretical biology. 2000. 
+/* Input filename */
+bash_filename:"case_2000_69.sh"$
+maxima_filename:"case_2000_69.txt"$ /* this file */
 
-Chapter 3, page 69
+/* Output filenames */
+tex_filename:"case_2000_69_output.tex"$
 
-*/
-kill(all);
+/* Write results to TeX file */
+stream: openw(tex_filename)$
+printf(stream,"\\documentclass{article}~%")$
+printf(stream,"~%")$
+printf(stream,"\\usepackage{listings}~%")$
+printf(stream,"\\usepackage{graphicx}~%")$
+printf(stream,"~%")$
+printf(stream,"\\title{Case 2000 page 69 exercise}~%")$
+printf(stream,"\\author{Richel Bilderbeek}~%")$
+printf(stream,"\\date{\\today}~%")$
+printf(stream,"~%")$
+printf(stream,"\\begin{document}~%")$
+printf(stream,"~%")$
+printf(stream,"\\maketitle~%")$
+printf(stream,"~%")$
+printf(stream,"\\begin{abstract}~%")$
+printf(stream,"This article is created within the CAS program Maxima~%")$
+printf(stream,"and shows how to the exercise of \\cite{case2000} at page 69.~%")$
+printf(stream,"\\end{abstract}~%")$
+printf(stream,"~%")$
+printf(stream,"\\section{Introduction}~%")$
+printf(stream,"~%")$
+printf(stream,"\\LaTeX~~is commonly used for writing publishable scientific articles\\cite{gaudeul2006}.~%")$
+printf(stream,"Algebraic manipulations can be done by a CAS, for example Maxima, Maple or Mathematica.~%")$
+printf(stream,"Maxima is the only free and open-source program, and it is the oldest free and open-source computer algebra system, with development started in 1967 (as Macsyma) or 1982 (as MAXIMA).~%")$
+printf(stream,"This article is an example of writing a \\LaTeX~~ article within Maxima~%")$
+printf(stream,"~%")$
+printf(stream,"\\section{Exercise}~%")$
+printf(stream,"~%")$
+printf(stream,"\\begin{table}[here]~%")$
+printf(stream,"  \\centering~%")$
+printf(stream,"  \\begin{tabular}{ | r | l | }~%")$
+printf(stream,"    \\hline~%")$
+printf(stream,"    symbol & description \\\\~%")$
+printf(stream,"    \\hline~%")$
+printf(stream,"    $I$ & Indentity matrix \\\\~%")$
+printf(stream,"    $L$ & Leslie matrix \\\\~%")$
+printf(stream,"    $M$ & Leslie matrix with $\\lambda$ subtracted at diagonal \\\\~%")$
+printf(stream,"    $x$ & population density vector \\\\~%")$
+printf(stream,"    $Z$ & Vector filled with zeroes \\\\~%")$
+printf(stream,"    $\\lambda$ & population growth rate \\\\~%")$
+printf(stream,"    \\hline~%")$
+printf(stream,"  \\end{tabular}~%")$
+printf(stream,"  \\caption{Definitions}~%")$
+printf(stream,"  \\label{table:table_definition}~%")$
+printf(stream,"\\end{table}~%")$
+printf(stream,"~%")$
+printf(stream,"(for definitions see table \\ref{table:table_definition} on page \\pageref{table:table_definition}).~%")$
+printf(stream,"~%")$
+printf(stream,"The equation to solve, equation 3.21 is:~%")$
 
-/* Leslie matrix */
+Eq3_21(L,x,lambda) := L * x = lambda * x;
+
+printf(stream,"\\begin{equation}~%")$
+printf(stream,tex1(Eq3_21(L,x,lambda)))$
+printf(stream,"\\end{equation}~%")$
+
+printf(stream,"The Leslie matrix, L,  given is:~%")$
+printf(stream,"~%")$
+
 L:matrix([1.0,1.0],[0.8,0.8]);
 
-/* 
-Subtract lambda from all elements on the diagonal 
-l: lambda 
-*/
+printf(stream,tex(L,false))$
+printf(stream,"~%")$
+printf(stream,"The simplifies equation 3.21 to:~%")$
+printf(stream,"~%")$
+printf(stream,tex(Eq3_21(L,x,lambda),false))$
+printf(stream,"~%")$
+printf(stream,"Solving equation 3.21 can be done with equation 3.24:~%")$
+printf(stream,"~%")$
+printf(stream,"$$det(L - \\lambda*I) = Z$$~%")$
+printf(stream,"~%")$
 
-M:L;
-M[1][1] : M[1][1] - l;
-M[2][2] : M[2][2] - l;
-M;
+I:ident(2);
+Z:zeromatrix(2,1);
 
-/* Calculate for which lambda the determinant of M is zero */
-stable_lambdas : solve(determinant(M) = 0,l);
+printf(stream,"Where I is the identity matrix:~%")$
+printf(stream,tex(I,false))$
+printf(stream,"And Z is the vector of zeroes:~%")$
+printf(stream,tex(Z,false))$
+printf(stream,"~%")$
 
-/* this lambda is called the dominant eigenvalue, which equals the ultimate population growth */
-l:rhs(stable_lambdas[1]);
-M;
-M:''(M);
+Eq3_24(L,lambda,I,Z) := det(L - lambda * I) = Z;
 
-/* 
+printf(stream,"This simplifies equation 3.24 to:~%")$
+printf(stream,"~%")$
+printf(stream,tex(Eq3_24(L,lambda,I,Z),false))$
+printf(stream,"~%")$
 
-Now we must solve 3.23: (L-lambda*I)*x = Z 
-Z: a vector filled with zeroes
-L: Leslie matrix
-lambda: dominant eigenvalue
-I: indentity matrix
-x: population sizes that can remain constant
+/*
+printf(stream,"Here I define $M$ as:~%")$
 
-( [. .]            [1 0] )
-( [. .] - lambda * [0 1] ) * x = Z
-
-As a trick, set x its first element to 1, otherwise the equations become unsolvable
-
-( [. .]            [1 0] )   [1]   [0]
-( [. .] - lambda * [0 1] ) * [.] = [0]
-
-This is equal to
-
-M * x = Z
+Eq3_24_b(L,lambda,I) := M = L - lambda * I;
+printf(stream,tex(Eq3_24_b(L,lambda,I),false))$
 
 */
+/* Great that M is in Eq3_24_b, but I cannot get it out, so I do it manually*/
+M:copymatrix(L);
+M[1][1] : M[1][1] - lambda;
+M[2][2] : M[2][2] - lambda;
+
+/*
+
+printf(stream,tex(M,false))$
+printf(stream,"~%")$
+printf(stream,"Solving for which $\\lambda$ equation 3.24 holds:~%")$
+printf(stream,"~%")$
+printf(stream,"$$det(L - \\lambda*I) = Z$$~%")$
+printf(stream,"$$det(M) = Z$$~%")$
+printf(stream,"~%")$
+printf(stream,"'det' denotes taking the determinant, L is the Leslie matrix, I is an identity matrix~%")$
+printf(stream,"and Z is a vector of all zeroes. M already has been calculated, so the equation becomes:~%")$
+printf(stream,"~%")$
+printf(stream,"$$det(M) = Z$$~%")$
+*/
+
+printf(stream,"~%")$
+printf(stream,"The determinant of that matrix ($M$), is:~%")$
+printf(stream,tex(determinant(M),false))$
+printf(stream,"~%")$
+
+stable_lambdas : solve(determinant(M) = 0,lambda);
+
+printf(stream,"~%")$
+printf(stream,"Solving $M=0$, the $\\lambda$s found are:~%")$
+printf(stream,"~%")$
+printf(stream,tex(stable_lambdas,false))$
+printf(stream,"~%")$
+printf(stream,"There is one stable population structure, $\\lambda=0$, which is~%")$
+printf(stream,"denotes an extinct population.~%")$
+
+lambda:rhs(stable_lambdas[1]);
+
+printf(stream,"Here I focus on the more interesting value,~%")$
+printf(stream,"where $\\lambda=")$
+printf(stream,string(lambda))$ /* Don't forget the string function */
+printf(stream,"$.~%")$
+printf(stream,"This lambda is called the dominant eigenvalue, which equals the ultimate population growth.~%")$
+printf(stream,"~%")$
+
+M:''(M); /* Filling it in */
+
+printf(stream,"Results in M:~%")$
+printf(stream,tex(M,false))$
+printf(stream,"~%")$
+
+printf(stream,"Solving 3.23: $M * x = Z$:~%")$
+printf(stream,"~%")$
+printf(stream,"Create a population vector, $x$, with $1.0$ as an initial value~%")$
+printf(stream,"(it will be rescaled later):~%")$
+printf(stream,"~%")$
 
 x:transpose(matrix([1.0,x2]));
+EqSolve(M,x,Z):= M.x = Z;
+
+printf(stream,tex(x,false))$
+printf(stream,"Now $M * x$ simplifies to:~%")$
+printf(stream,tex(lhs(EqSolve(M,x,Z)),false))$
+printf(stream,"Solving this, 3.23: $M * x = Z$, there are two equations that can be solved:~%")$
+printf(stream,tex(EqSolve(M,x,Z),false))$
 
 q:''(M.x)[1,1];
 x2:rhs(solve(q)[1]);
+
+printf(stream,"Solving the upper, results in $x2=")$
+printf(stream,string(x2))$
+printf(stream,"$.~%")$
+printf(stream,"This results in an $x$ of:~%")$
+
 x;
 x:''(x);
 
-/* Vector x must have its values lowered, so its sum is one */
-sz:matrix_size(x);
-my_sum:sum(sum(x[i,j],i,1,sz[1]),j,1,sz[2]);
-my_sum;
+printf(stream,tex(x,false))$
+printf(stream,"$x$ must be rescaled so that its sum equals $1.0$.~%")$
+
+sz: matrix_size(x);
+my_sum: sum(sum(x[i,j],i,1,sz[1]),j,1,sz[2]);
+
+printf(stream,"$x$ its current sum is $")$
+printf(stream,string(my_sum))$
+printf(stream,"$, so dividing all elements by it, results in an $x$ of:~%")$
+
 x:x/my_sum;
 x;
 
+printf(stream,tex(x,false))$
 
-Z:zeromatrix(2,1);
-S(x2):= M.x = Z;
-S(x2):= ''(M).x = ''(Z);
-solve(S(x2),x2);
-solve(S(x2),x2);
+/* Conclusion */
+
+printf(stream,"\\section{Conclusion}~%")$
+printf(stream,"~%")$
+printf(stream,"For this Leslie matrix:~%")$
+printf(stream,tex(L,false))$
+printf(stream,"~%")$
+printf(stream,"The dominant eigenvalue, $\\lambda$, is:~%")$
+printf(stream,"\\\\\\\\~%")$
+printf(stream,string(lambda))$ /* Don't forget the string function */
+printf(stream,"\\\\~%")$
+printf(stream,"~%")$
+printf(stream,"The stable population size distribution is:~%")$
+printf(stream,"~%")$
+printf(stream,tex(x,false))$
+printf(stream,"~%")$
+
+/* Discussion */
+
+printf(stream,"\\section{Discussion}~%")$
+printf(stream,"~%")$
+printf(stream,"Writing \\LaTeX~~within Maxima can be done, but it is a bit cumbersome:~%")$
+printf(stream,"Maxima does not know \\LaTeX~~syntax and just creates contextless strings,~%")$
+printf(stream,"which might not be compilable by \\LaTeX.~%")$
+printf(stream,"However, because the script does create a .tex file,~%")$
+printf(stream,"this file can be inspected easily with a \\LaTeX~~tool like texmaker.~%")$
+printf(stream,"~%")$
+
+/* Bibliography */
+
+printf(stream,"\\begin{thebibliography}{9}~%")$
+printf(stream,"~%")$
+printf(stream,"\\bibitem{case2000}~%")$
+printf(stream,"  Case, Ted J.~%")$
+printf(stream,"  2000~%")$
+printf(stream,"  An illustrated guide to theoretical ecology.~%")$
+printf(stream,"~%")$
+printf(stream,"\\bibitem{gaudeul2006}~%")$
+printf(stream,"  Gaudeul, A.~%")$
+printf(stream,"  2006~%")$
+printf(stream,"  Do Open Source Developers Respond to Competition?: The (La)TeX Case Study.~%")$
+printf(stream,"  Available at SSRN: http://ssrn.com/abstract=908946 or http://dx.doi.org/10.2139/ssrn.908946~%")$
+printf(stream,"~%")$
+printf(stream,"\\end{thebibliography}~%")$
+printf(stream,"~%")$
+
+/* Appendix */
+
+printf(stream,"\\appendix~%")$
+printf(stream,"~%")$
+printf(stream,"\\section{Script file}~%")$
+printf(stream,"~%")$
+printf(stream,"\\lstinputlisting[language=C++,showstringspaces=false,breaklines=true,frame=single]{")$
+printf(stream,bash_filename)$
+printf(stream,"}~%")$
+printf(stream,"~%")$
+printf(stream,"\\section{Maxima file}~%")$
+printf(stream,"~%")$
+printf(stream,"\\lstinputlisting[language=C++,showstringspaces=false,breaklines=true,frame=single]{")$
+printf(stream,maxima_filename)$
+printf(stream,"}~%")$
+printf(stream,"~%")$
+printf(stream,"\\section{\\LaTeX~~file}~%")$
+printf(stream,"~%")$
+printf(stream,"\\lstinputlisting[language=tex,showstringspaces=false,breaklines=true,frame=single]{")$
+printf(stream,tex_filename)$
+printf(stream,"}~%")$
+printf(stream,"~%")$
+printf(stream,"\\end{document}~%")$
+close(stream)$

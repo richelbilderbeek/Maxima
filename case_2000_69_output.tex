@@ -1,0 +1,158 @@
+\documentclass{article}
+
+\usepackage{listings}
+\usepackage{graphicx}
+
+\title{Case 2000 page 69 exercise}
+\author{Richel Bilderbeek}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This article is created within the CAS program Maxima
+and shows how to the exercise of \cite{case2000} at page 69.
+\end{abstract}
+
+\section{Introduction}
+
+\LaTeX~is commonly used for writing publishable scientific articles\cite{gaudeul2006}.
+Algebraic manipulations can be done by a CAS, for example Maxima, Maple or Mathematica.
+Maxima is the only free and open-source program, and it is the oldest free and open-source computer algebra system, with development started in 1967 (as Macsyma) or 1982 (as MAXIMA).
+This article is an example of writing a \LaTeX~ article within Maxima
+
+\section{Exercise}
+
+\begin{table}[here]
+  \centering
+  \begin{tabular}{ | r | l | }
+    \hline
+    symbol & description \\
+    \hline
+    $I$ & Indentity matrix \\
+    $L$ & Leslie matrix \\
+    $M$ & Leslie matrix with $\lambda$ subtracted at diagonal \\
+    $x$ & population density vector \\
+    $Z$ & Vector filled with zeroes \\
+    $\lambda$ & population growth rate \\
+    \hline
+  \end{tabular}
+  \caption{Definitions}
+  \label{table:table_definition}
+\end{table}
+
+(for definitions see table \ref{table:table_definition} on page \pageref{table:table_definition}).
+
+The equation to solve, equation 3.21 is:
+\begin{equation}
+x\,L=x\,\lambda\end{equation}
+The Leslie matrix, L,  given is:
+
+$$\pmatrix{1.0&1.0\cr 0.8&0.8\cr }$$
+
+The simplifies equation 3.21 to:
+
+$$\pmatrix{1.0\,x&1.0\,x\cr 0.8\,x&0.8\,x\cr }=x\,\lambda$$
+
+Solving equation 3.21 can be done with equation 3.24:
+
+$$det(L - \lambda*I) = Z$$
+
+Where I is the identity matrix:
+$$\pmatrix{1&0\cr 0&1\cr }$$
+And Z is the vector of zeroes:
+$$\pmatrix{0\cr 0\cr }$$
+
+This simplifies equation 3.24 to:
+
+$${\it det}\left(\pmatrix{1.0-\lambda&1.0\cr 0.8&0.8-\lambda\cr }
+ \right)=\pmatrix{0\cr 0\cr }$$
+
+
+The determinant of that matrix ($M$), is:
+$$\left(0.8-\lambda\right)\,\left(1.0-\lambda\right)-0.8$$
+
+
+Solving $M=0$, the $\lambda$s found are:
+
+$$\left[ \lambda={{9}\over{5}} , \lambda=0 \right] $$
+
+There is one stable population structure, $\lambda=0$, which is
+denotes an extinct population.
+Here I focus on the more interesting value,
+where $\lambda=9/5$.
+This lambda is called the dominant eigenvalue, which equals the ultimate population growth.
+
+Results in M:
+$$\pmatrix{-0.8&1.0\cr 0.8&-1.0\cr }$$
+
+Solving 3.23: $M * x = Z$:
+
+Create a population vector, $x$, with $1.0$ as an initial value
+(it will be rescaled later):
+
+$$\pmatrix{1.0\cr {\it x_2}\cr }$$
+Now $M * x$ simplifies to:
+$$\pmatrix{1.0\,{\it x_2}-0.8\cr 0.8-1.0\,{\it x_2}\cr }$$
+Solving this, 3.23: $M * x = Z$, there are two equations that can be solved:
+$$\pmatrix{1.0\,{\it x_2}-0.8\cr 0.8-1.0\,{\it x_2}\cr }=\pmatrix{0
+ \cr 0\cr }$$
+Solving the upper, results in $x2=4/5$.
+This results in an $x$ of:
+$$\pmatrix{1.0\cr {{4}\over{5}}\cr }$$
+$x$ must be rescaled so that its sum equals $1.0$.
+$x$ its current sum is $1.8$, so dividing all elements by it, results in an $x$ of:
+$$\pmatrix{0.55555555555555\cr 0.44444444444444\cr }$$
+\section{Conclusion}
+
+For this Leslie matrix:
+$$\pmatrix{1.0&1.0\cr 0.8&0.8\cr }$$
+
+The dominant eigenvalue, $\lambda$, is:
+\\\\
+9/5\\
+
+The stable population size distribution is:
+
+$$\pmatrix{0.55555555555555\cr 0.44444444444444\cr }$$
+
+\section{Discussion}
+
+Writing \LaTeX~within Maxima can be done, but it is a bit cumbersome:
+Maxima does not know \LaTeX~syntax and just creates contextless strings,
+which might not be compilable by \LaTeX.
+However, because the script does create a .tex file,
+this file can be inspected easily with a \LaTeX~tool like texmaker.
+
+\begin{thebibliography}{9}
+
+\bibitem{case2000}
+  Case, Ted J.
+  2000
+  An illustrated guide to theoretical ecology.
+
+\bibitem{gaudeul2006}
+  Gaudeul, A.
+  2006
+  Do Open Source Developers Respond to Competition?: The (La)TeX Case Study.
+  Available at SSRN: http://ssrn.com/abstract=908946 or http://dx.doi.org/10.2139/ssrn.908946
+
+\end{thebibliography}
+
+\appendix
+
+\section{Script file}
+
+\lstinputlisting[language=C++,showstringspaces=false,breaklines=true,frame=single]{case_2000_69.sh}
+
+\section{Maxima file}
+
+\lstinputlisting[language=C++,showstringspaces=false,breaklines=true,frame=single]{case_2000_69.txt}
+
+\section{\LaTeX~file}
+
+\lstinputlisting[language=tex,showstringspaces=false,breaklines=true,frame=single]{case_2000_69_output.tex}
+
+\end{document}

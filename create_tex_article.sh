@@ -9,3 +9,4 @@ fi
 
 maxima -b $maxima_input_file
 pdflatex $tex_output_file
+pdflatex $tex_output_file
