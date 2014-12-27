@@ -81,13 +81,32 @@ printf(stream,"(for definitions see table \\ref{table:table_definition} on page 
 printf(stream,"The Leslie matrix, L,  given in this exercise is:~%")$
 printf(stream,"~%")$
 
-L:matrix([1.0,1.0],[0.8,0.8]);
+L_original:matrix([1.0,1.0],[0.8,0.8]);
+ 
+printf(stream,"\\begin{equation}~%")$
+printf(stream,"L=")$
+printf(stream,tex1(L_original))$
+printf(stream,"\\end{equation}~%")$
+printf(stream,"~%")$
 
+L:L_original;
+L:matrix([0.1,2.0],[0.1,0.8]);
+/* L:matrix([0.1,1.0,0.0],[0.8,0.8,0.0],[0.8,0.8,0.0]); */
+
+printf(stream,"The Leslie matrix, L, used:~%")$
+printf(stream,"~%")$
 printf(stream,"\\begin{equation}~%")$
 printf(stream,"L=")$
 printf(stream,tex1(L))$
 printf(stream,"\\end{equation}~%")$
 printf(stream,"~%")$
+
+n_age_classes:matrix_size(L)[1];
+
+printf(stream,"~%")$
+printf(stream,"Note that this matrix has ")$
+printf(stream,string(n_age_classes))$
+printf(stream," age classes.~%")$
 printf(stream,"The simplifies equation \\ref{eq:eq3_21} to:~%")$
 printf(stream,"~%")$
 printf(stream,"\\begin{equation}~%")$
@@ -102,8 +121,8 @@ printf(stream,"\\label{eq:eq3_24}~%")$
 printf(stream,"\\end{equation}~%")$
 printf(stream,"~%")$
 
-I:ident(2);
-Z:zeromatrix(2,1);
+I:ident(n_age_classes);
+Z:zeromatrix(n_age_classes,1);
 
 printf(stream,"Equation \\ref{eq:eq3_24} equals equation 3.24 of \\cite{case2000},~%")$
 printf(stream,"where I is the identity matrix:~%")$
@@ -129,8 +148,8 @@ printf(stream,"~%")$
 
 /* Great that M is in Eq3_24_b, but I cannot get it out, so I do it manually*/
 M:copymatrix(L);
-M[1][1] : M[1][1] - lambda;
-M[2][2] : M[2][2] - lambda;
+D: diagmatrix (n_age_classes, lambda);
+M:M-D;
 
 printf(stream,"~%")$
 printf(stream,"The determinant of that matrix ($M$), is:~%")$
@@ -185,7 +204,19 @@ printf(stream,"Here, I put $1.0$ as the initial value of $x$ its first element.~
 printf(stream,"(it will be rescaled later):~%")$
 printf(stream,"~%")$
 
+
 x:transpose(matrix([1.0,x2]));
+
+if n_age_classes=3
+then 
+  x:transpose(matrix([1.0,x2,x3]))
+;
+
+if n_age_classes=4
+then 
+  printf(stream,"NOT SUPPORTED 4 AGE CLASSES YET!~%")
+;
+
 
 printf(stream,"\\begin{equation}~%")$
 printf(stream,"x = ")$

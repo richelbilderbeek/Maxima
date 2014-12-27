@@ -59,10 +59,17 @@ The Leslie matrix, L,  given in this exercise is:
 \begin{equation}
 L=\pmatrix{1.0&1.0\cr 0.8&0.8\cr }\end{equation}
 
+The Leslie matrix, L, used:
+
+\begin{equation}
+L=\pmatrix{0.1&2.0\cr 0.1&0.8\cr }\end{equation}
+
+
+Note that this matrix has 2 age classes.
 The simplifies equation \ref{eq:eq3_21} to:
 
 \begin{equation}
-\pmatrix{1.0\,x&1.0\,x\cr 0.8\,x&0.8\,x\cr }=x\,\lambda\end{equation}
+\pmatrix{0.1\,x&2.0\,x\cr 0.1\,x&0.8\,x\cr }=x\,\lambda\end{equation}
 
 Solving equation \ref{eq:eq3_21} can be done with equation \ref{eq:eq3_24}:
 
@@ -82,28 +89,28 @@ Z=\pmatrix{0\cr 0\cr }\end{equation}
 This simplifies equation \ref{eq:eq3_24} to:
 
 \begin{equation}
-{\it det}\left(\pmatrix{1.0-\lambda&1.0\cr 0.8&0.8-\lambda\cr }\right)=\pmatrix{0\cr 0\cr }\end{equation}
+{\it det}\left(\pmatrix{0.1-\lambda&2.0\cr 0.1&0.8-\lambda\cr }\right)=\pmatrix{0\cr 0\cr }\end{equation}
 
 
 The determinant of that matrix ($M$), is:
 \begin{equation}
-det(\pmatrix{1.0-\lambda&1.0\cr 0.8&0.8-\lambda\cr })=\left(0.8-\lambda\right)\,\left(1.0-\lambda\right)-0.8\end{equation}
+det(\pmatrix{0.1-\lambda&2.0\cr 0.1&0.8-\lambda\cr })=\left(0.1-\lambda\right)\,\left(0.8-\lambda\right)-0.2\end{equation}
 
 
 Solving $M=0$, the $\lambda$s found are:
 
 \begin{equation}
-\left[ \lambda={{9}\over{5}} , \lambda=0 \right] \end{equation}
+\left[ \lambda=-{{\sqrt{129}-9}\over{20}} , \lambda={{\sqrt{129}+9}\over{20}} \right] \end{equation}
 
 There is one stable population structure, $\lambda=0$, which is
 denotes an extinct population.
 Here I focus on the more interesting value,
-where $\lambda=9/5$.
+where $\lambda=-(sqrt(129)-9)/20$.
 This lambda is called the dominant eigenvalue, which equals the ultimate population growth.
 
 Put $\lambda$ in M, this results in:
 \begin{equation}
-M=\pmatrix{-0.8&1.0\cr 0.8&-1.0\cr }\end{equation}
+M=\pmatrix{{{\sqrt{129}-9}\over{20}}+0.1&2.0\cr 0.1&{{\sqrt{129}-9}\over{20}}+0.8\cr }\end{equation}
 
 Now we can solve the $x$ of equation \ref{eq:eq3_23} (equals 3.23 from \cite{case2000}),
 which was this:
@@ -119,32 +126,32 @@ Here, I put $1.0$ as the initial value of $x$ its first element.
 x = \pmatrix{1.0\cr {\it x_2}\cr }\end{equation}
 Putting this $x$ in equation \ref{eq:eq3_23}:
 \begin{equation}
-M * x = \pmatrix{1.0\,{\it x_2}-0.8\cr 0.8-1.0\,{\it x_2}\cr }= \pmatrix{0\cr 0\cr }\end{equation}
+M * x = \pmatrix{2.0\,{\it x_2}+1.0\,\left({{\sqrt{129}-9}\over{20}}+0.1\right)\cr \left({{\sqrt{129}-9}\over{20}}+0.8\right)\,{\it x_2}+0.1\cr }= \pmatrix{0\cr 0\cr }\end{equation}
 As our matrix has two rows, there are two equations that can be solved:
-Solving the upper, results in $x2=4/5$.
+Solving the upper, results in $x2=-(sqrt(129)-7)/40$.
 This results in an $x$ of:
 \begin{equation}
-x = \pmatrix{1.0\cr {{4}\over{5}}\cr }\end{equation}
+x = \pmatrix{1.0\cr -{{\sqrt{129}-7}\over{40}}\cr }\end{equation}
 $x$ must be rescaled so that its sum equals $1.0$.
-$x$ its current sum is $1.8$, so dividing all elements by it, results in an $x$ of:
+$x$ its current sum is $1.0-(sqrt(129)-7)/40$, so dividing all elements by it, results in an $x$ of:
 \begin{equation}
-x = \pmatrix{0.55555555555555\cr 0.44444444444444\cr }\end{equation}
+x = \pmatrix{{{1.0}\over{1.0-{{\sqrt{129}-7}\over{40}}}}\cr -{{\sqrt{129}-7}\over{40\,\left(1.0-{{\sqrt{129}-7}\over{40}}\right)}}\cr }\end{equation}
 \section{Conclusion}
 
 For this Leslie matrix:
 \begin{equation}
-\pmatrix{1.0&1.0\cr 0.8&0.8\cr }\end{equation}
+\pmatrix{0.1&2.0\cr 0.1&0.8\cr }\end{equation}
 
 The dominant eigenvalue, $\lambda$, is:
 \\\\
 \begin{equation}
-\lambda = 9/5\end{equation}
+\lambda = -(sqrt(129)-9)/20\end{equation}
 \\
 
 The stable population size distribution is:
 
 \begin{equation}
-x = \pmatrix{0.55555555555555\cr 0.44444444444444\cr }\end{equation}
+x = \pmatrix{{{1.0}\over{1.0-{{\sqrt{129}-7}\over{40}}}}\cr -{{\sqrt{129}-7}\over{40\,\left(1.0-{{\sqrt{129}-7}\over{40}}\right)}}\cr }\end{equation}
 
 \section{Discussion}
 
