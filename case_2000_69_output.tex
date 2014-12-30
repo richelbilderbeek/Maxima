@@ -3,7 +3,7 @@
 \usepackage{listings}
 \usepackage{graphicx}
 
-\title{Case 2000 page 69 exercise}
+\title{Using Maxima to write a \LaTeX~ article}
 \author{Richel Bilderbeek}
 \date{\today}
 
@@ -12,8 +12,8 @@
 \maketitle
 
 \begin{abstract}
-This article is created within the CAS program Maxima
-and shows how to the exercise of \cite{case2000} at page 69.
+This article is created from within the CAS program Maxima
+and converted to PDF by using FOSS tools only, to assess the viability of this pipeline.As a testcase, the exercise of \cite{case2000} (page 69) is used.
 \end{abstract}
 
 \section{Introduction}
@@ -22,6 +22,16 @@ and shows how to the exercise of \cite{case2000} at page 69.
 Algebraic manipulations can be done by a CAS, for example Maxima, Maple or Mathematica.
 Maxima is the only free and open-source program, and it is the oldest free and open-source computer algebra system, with development started in 1967 (as Macsyma) or 1982 (as MAXIMA).
 This article is an example of writing a \LaTeX~ article within Maxima
+
+Writing \LaTeX~ is slower and introduces more errors 
+then using Microsoft Word as a text editor \cite{knauff&nejasmic2014}.
+In this article, however, the text of a document is generated. \LaTeX~ can
+parse that text to create a document, like a Word .docx could do as well,
+with less markup (XML) added. Additionally, all tools in the current pipeline
+are FOSS, so anyone with an internet connection can access these without
+paying licensing costs.
+
+Maxima its capabilities is tested by doing an exercise of \cite{case2000} at page 69.
 
 \section{Exercise}
 
@@ -51,8 +61,8 @@ x\,L=x\,\lambda\label{eq:eq3_21}
 x\,M=Z\label{eq:eq3_23}
 \end{equation}
 
-Equation \ref{eq:eq3_21} equals equation 3.21 of \cite{case2000}
-Equation \ref{eq:eq3_23} equals equation 3.23 of \cite{case2000}
+Equation \ref{eq:eq3_21} equals equation 3.21 of \cite{case2000} (or P2.4a, page 237, in \cite{otto&day2007})
+Equation \ref{eq:eq3_23} equals equation 3.23 of \cite{case2000} 
 (for definitions see table \ref{table:table_definition} on page \pageref{table:table_definition}).
 The Leslie matrix, L,  given in this exercise is:
 
@@ -62,14 +72,14 @@ L=\pmatrix{1.0&1.0\cr 0.8&0.8\cr }\end{equation}
 The Leslie matrix, L, used:
 
 \begin{equation}
-L=\pmatrix{0.1&2.0\cr 0.1&0.8\cr }\end{equation}
+L=\pmatrix{1.0&1.0\cr 0.8&0.8\cr }\end{equation}
 
 
 Note that this matrix has 2 age classes.
 The simplifies equation \ref{eq:eq3_21} to:
 
 \begin{equation}
-\pmatrix{0.1\,x&2.0\,x\cr 0.1\,x&0.8\,x\cr }=x\,\lambda\end{equation}
+\pmatrix{1.0\,x&1.0\,x\cr 0.8\,x&0.8\,x\cr }=x\,\lambda\end{equation}
 
 Solving equation \ref{eq:eq3_21} can be done with equation \ref{eq:eq3_24}:
 
@@ -78,7 +88,7 @@ det(L - \lambda*I) = Z
 \label{eq:eq3_24}
 \end{equation}
 
-Equation \ref{eq:eq3_24} equals equation 3.24 of \cite{case2000},
+Equation \ref{eq:eq3_24} equals equation 3.24 of \cite{case2000} (also: P2.4b at page 237, or 10.3.2 at page 406, in \cite{otto&day2007}) ,
 where I is the identity matrix:
 \begin{equation}
 I=\pmatrix{1&0\cr 0&1\cr }\end{equation}
@@ -89,28 +99,28 @@ Z=\pmatrix{0\cr 0\cr }\end{equation}
 This simplifies equation \ref{eq:eq3_24} to:
 
 \begin{equation}
-{\it det}\left(\pmatrix{0.1-\lambda&2.0\cr 0.1&0.8-\lambda\cr }\right)=\pmatrix{0\cr 0\cr }\end{equation}
+{\it det}\left(\pmatrix{1.0-\lambda&1.0\cr 0.8&0.8-\lambda\cr }\right)=\pmatrix{0\cr 0\cr }\end{equation}
 
 
 The determinant of that matrix ($M$), is:
 \begin{equation}
-det(\pmatrix{0.1-\lambda&2.0\cr 0.1&0.8-\lambda\cr })=\left(0.1-\lambda\right)\,\left(0.8-\lambda\right)-0.2\end{equation}
-
+det(\pmatrix{1.0-\lambda&1.0\cr 0.8&0.8-\lambda\cr })=\left(0.8-\lambda\right)\,\left(1.0-\lambda\right)-0.8
+\end{equation}
 
 Solving $M=0$, the $\lambda$s found are:
 
 \begin{equation}
-\left[ \lambda=-{{\sqrt{129}-9}\over{20}} , \lambda={{\sqrt{129}+9}\over{20}} \right] \end{equation}
+\left[ \lambda={{9}\over{5}} , \lambda=0 \right] \end{equation}
 
 There is one stable population structure, $\lambda=0$, which is
 denotes an extinct population.
 Here I focus on the more interesting value,
-where $\lambda=-(sqrt(129)-9)/20$.
+where $\lambda=9/5$.
 This lambda is called the dominant eigenvalue, which equals the ultimate population growth.
 
 Put $\lambda$ in M, this results in:
 \begin{equation}
-M=\pmatrix{{{\sqrt{129}-9}\over{20}}+0.1&2.0\cr 0.1&{{\sqrt{129}-9}\over{20}}+0.8\cr }\end{equation}
+M=\pmatrix{-0.8&1.0\cr 0.8&-1.0\cr }\end{equation}
 
 Now we can solve the $x$ of equation \ref{eq:eq3_23} (equals 3.23 from \cite{case2000}),
 which was this:
@@ -126,32 +136,32 @@ Here, I put $1.0$ as the initial value of $x$ its first element.
 x = \pmatrix{1.0\cr {\it x_2}\cr }\end{equation}
 Putting this $x$ in equation \ref{eq:eq3_23}:
 \begin{equation}
-M * x = \pmatrix{2.0\,{\it x_2}+1.0\,\left({{\sqrt{129}-9}\over{20}}+0.1\right)\cr \left({{\sqrt{129}-9}\over{20}}+0.8\right)\,{\it x_2}+0.1\cr }= \pmatrix{0\cr 0\cr }\end{equation}
+M * x = \pmatrix{1.0\,{\it x_2}-0.8\cr 0.8-1.0\,{\it x_2}\cr }= \pmatrix{0\cr 0\cr }\end{equation}
 As our matrix has two rows, there are two equations that can be solved:
-Solving the upper, results in $x2=-(sqrt(129)-7)/40$.
+Solving the upper, results in $x2=4/5$.
 This results in an $x$ of:
 \begin{equation}
-x = \pmatrix{1.0\cr -{{\sqrt{129}-7}\over{40}}\cr }\end{equation}
+x = \pmatrix{1.0\cr {{4}\over{5}}\cr }\end{equation}
 $x$ must be rescaled so that its sum equals $1.0$.
-$x$ its current sum is $1.0-(sqrt(129)-7)/40$, so dividing all elements by it, results in an $x$ of:
+$x$ its current sum is $1.8$, so dividing all elements by it, results in an $x$ of:
 \begin{equation}
-x = \pmatrix{{{1.0}\over{1.0-{{\sqrt{129}-7}\over{40}}}}\cr -{{\sqrt{129}-7}\over{40\,\left(1.0-{{\sqrt{129}-7}\over{40}}\right)}}\cr }\end{equation}
+x = \pmatrix{0.55555555555555\cr 0.44444444444444\cr }\end{equation}
 \section{Conclusion}
 
 For this Leslie matrix:
 \begin{equation}
-\pmatrix{0.1&2.0\cr 0.1&0.8\cr }\end{equation}
+\pmatrix{1.0&1.0\cr 0.8&0.8\cr }\end{equation}
 
 The dominant eigenvalue, $\lambda$, is:
 \\\\
 \begin{equation}
-\lambda = -(sqrt(129)-9)/20\end{equation}
+\lambda = 9/5\end{equation}
 \\
 
 The stable population size distribution is:
 
 \begin{equation}
-x = \pmatrix{{{1.0}\over{1.0-{{\sqrt{129}-7}\over{40}}}}\cr -{{\sqrt{129}-7}\over{40\,\left(1.0-{{\sqrt{129}-7}\over{40}}\right)}}\cr }\end{equation}
+x = \pmatrix{0.55555555555555\cr 0.44444444444444\cr }\end{equation}
 
 \section{Discussion}
 
@@ -173,6 +183,18 @@ this file can be inspected easily with a \LaTeX~tool like texmaker.
   2006
   Do Open Source Developers Respond to Competition?: The (La)TeX Case Study.
   Available at SSRN: http://ssrn.com/abstract=908946 or http://dx.doi.org/10.2139/ssrn.908946
+
+\bibitem{knauff&nejasmic2014}
+  Knauff, M. and Nejasmic, J.
+  December 19, 2014
+  An Efficiency Comparison of Document Preparation Systems Used in Academic Research and Development.
+  PLoS ONE 9(12): e115069. doi: 10.1371/journal.pone.0115069
+
+\bibitem{otto&day2007}
+  Otto, Sarah P. and Day, T.
+  2007
+  A biologist's guide to mathematical modeling in ecology and evolution.
+  ISBN-13: 978-0-691-12344-8
 
 \end{thebibliography}
 

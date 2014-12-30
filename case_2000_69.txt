@@ -17,7 +17,7 @@ printf(stream,"~%")$
 printf(stream,"\\usepackage{listings}~%")$
 printf(stream,"\\usepackage{graphicx}~%")$
 printf(stream,"~%")$
-printf(stream,"\\title{Case 2000 page 69 exercise}~%")$
+printf(stream,"\\title{Using Maxima to write a \\LaTeX~~ article}~%")$
 printf(stream,"\\author{Richel Bilderbeek}~%")$
 printf(stream,"\\date{\\today}~%")$
 printf(stream,"~%")$
@@ -26,8 +26,9 @@ printf(stream,"~%")$
 printf(stream,"\\maketitle~%")$
 printf(stream,"~%")$
 printf(stream,"\\begin{abstract}~%")$
-printf(stream,"This article is created within the CAS program Maxima~%")$
-printf(stream,"and shows how to the exercise of \\cite{case2000} at page 69.~%")$
+printf(stream,"This article is created from within the CAS program Maxima~%")$
+printf(stream,"and converted to PDF by using FOSS tools only, to assess the viability of this pipeline.")$
+printf(stream,"As a testcase, the exercise of \\cite{case2000} (page 69) is used.~%")$
 printf(stream,"\\end{abstract}~%")$
 printf(stream,"~%")$
 printf(stream,"\\section{Introduction}~%")$
@@ -36,6 +37,16 @@ printf(stream,"\\LaTeX~~is commonly used for writing publishable scientific arti
 printf(stream,"Algebraic manipulations can be done by a CAS, for example Maxima, Maple or Mathematica.~%")$
 printf(stream,"Maxima is the only free and open-source program, and it is the oldest free and open-source computer algebra system, with development started in 1967 (as Macsyma) or 1982 (as MAXIMA).~%")$
 printf(stream,"This article is an example of writing a \\LaTeX~~ article within Maxima~%")$
+printf(stream,"~%")$
+printf(stream,"Writing \\LaTeX~~ is slower and introduces more errors ~%")$
+printf(stream,"then using Microsoft Word as a text editor \\cite{knauff&nejasmic2014}.~%")$
+printf(stream,"In this article, however, the text of a document is generated. \\LaTeX~~ can~%")$
+printf(stream,"parse that text to create a document, like a Word .docx could do as well,~%")$
+printf(stream,"with less markup (XML) added. Additionally, all tools in the current pipeline~%")$
+printf(stream,"are FOSS, so anyone with an internet connection can access these without~%")$
+printf(stream,"paying licensing costs.~%")$
+printf(stream,"~%")$
+printf(stream,"Maxima its capabilities is tested by doing an exercise of \\cite{case2000} at page 69.~%")$
 printf(stream,"~%")$
 printf(stream,"\\section{Exercise}~%")$
 printf(stream,"~%")$
@@ -75,8 +86,8 @@ printf(stream,"\\label{eq:eq3_23}~%")$
 printf(stream,"\\end{equation}~%")$
 
 printf(stream,"~%")$
-printf(stream,"Equation \\ref{eq:eq3_21} equals equation 3.21 of \\cite{case2000}~%")$
-printf(stream,"Equation \\ref{eq:eq3_23} equals equation 3.23 of \\cite{case2000}~%")$
+printf(stream,"Equation \\ref{eq:eq3_21} equals equation 3.21 of \\cite{case2000} (or P2.4a, page 237, in \\cite{otto&day2007})~%")$
+printf(stream,"Equation \\ref{eq:eq3_23} equals equation 3.23 of \\cite{case2000} ~%")$
 printf(stream,"(for definitions see table \\ref{table:table_definition} on page \\pageref{table:table_definition}).~%")$
 printf(stream,"The Leslie matrix, L,  given in this exercise is:~%")$
 printf(stream,"~%")$
@@ -90,7 +101,7 @@ printf(stream,"\\end{equation}~%")$
 printf(stream,"~%")$
 
 L:L_original;
-L:matrix([0.1,2.0],[0.1,0.8]);
+/*L:matrix([0.1,2.0],[0.1,0.8]); */
 /* L:matrix([0.1,1.0,0.0],[0.8,0.8,0.0],[0.8,0.8,0.0]); */
 
 printf(stream,"The Leslie matrix, L, used:~%")$
@@ -124,7 +135,7 @@ printf(stream,"~%")$
 I:ident(n_age_classes);
 Z:zeromatrix(n_age_classes,1);
 
-printf(stream,"Equation \\ref{eq:eq3_24} equals equation 3.24 of \\cite{case2000},~%")$
+printf(stream,"Equation \\ref{eq:eq3_24} equals equation 3.24 of \\cite{case2000} (also: P2.4b at page 237, or 10.3.2 at page 406, in \\cite{otto&day2007}) ,~%")$
 printf(stream,"where I is the identity matrix:~%")$
 printf(stream,"\\begin{equation}~%")$
 printf(stream,"I=")$
@@ -158,8 +169,8 @@ printf(stream,"det(")$
 printf(stream,tex1(M))$
 printf(stream,")=")$
 printf(stream,tex1(determinant(M)))$
-printf(stream,"\\end{equation}~%")$
-printf(stream,"~%")$
+printf(stream,"~%")$printf(stream,"\\end{equation}~%")$
+
 
 stable_lambdas : solve(determinant(M) = 0,lambda);
 
@@ -300,7 +311,29 @@ printf(stream,"Maxima does not know \\LaTeX~~syntax and just creates contextless
 printf(stream,"which might not be compilable by \\LaTeX.~%")$
 printf(stream,"However, because the script does create a .tex file,~%")$
 printf(stream,"this file can be inspected easily with a \\LaTeX~~tool like texmaker.~%")$
-printf(stream,"~%")$
+printf(stream,"~%")$ 
+
+/* 
+Why can't it be solved simpler by stating
+X: population vector at t
+Y: population vector at t+1
+
+and solving when Y has the same relative proportions than X
+
+?
+*/
+/*
+kill(X);
+kill(Y);
+L:matrix([1.0,1.0],[0.8,0.8]);
+Eq1(X,Y,L) := Y = L.X;
+Eq2(X,Y) := X[1] / (X[1] + X[2]) = Y[1] / (Y[1] + Y[2]);
+Eq3(X,Y) := X[2] / (X[1] + X[2]) = Y[2] / (Y[1] + Y[2]);
+X:transpose(matrix([xa,xb]));
+Y:transpose(matrix([ya,yb]));
+*/
+
+
 
 /* Bibliography */
 
@@ -317,6 +350,23 @@ printf(stream,"  2006~%")$
 printf(stream,"  Do Open Source Developers Respond to Competition?: The (La)TeX Case Study.~%")$
 printf(stream,"  Available at SSRN: http://ssrn.com/abstract=908946 or http://dx.doi.org/10.2139/ssrn.908946~%")$
 printf(stream,"~%")$
+printf(stream,"\\bibitem{knauff&nejasmic2014}~%")$
+printf(stream,"  Knauff, M. and Nejasmic, J.~%")$
+printf(stream,"  December 19, 2014~%")$
+printf(stream,"  An Efficiency Comparison of Document Preparation Systems Used in Academic Research and Development.~%")$
+printf(stream,"  PLoS ONE 9(12): e115069. doi: 10.1371/journal.pone.0115069~%")$
+printf(stream,"~%")$
+printf(stream,"\\bibitem{otto&day2007}~%")$
+printf(stream,"  Otto, Sarah P. and Day, T.~%")$
+printf(stream,"  2007~%")$
+printf(stream,"  A biologist's guide to mathematical modeling in ecology and evolution.~%")$
+printf(stream,"  ISBN-13: 978-0-691-12344-8~%")$
+printf(stream,"~%")$
+   
+    
+
+    
+
 printf(stream,"\\end{thebibliography}~%")$
 printf(stream,"~%")$
 
