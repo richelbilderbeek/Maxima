@@ -1,0 +1,8 @@
+png_filename:"/home/richel/GitHubs/Maxima/contour_plot.png"$
+
+contour_plot(
+  x^2 + y^2, 
+  [x, -4, 4], 
+  [y, -4, 4],
+  [png_file,png_filename]  
+);

@@ -13,7 +13,7 @@ plot2d_filename:"/home/richel/GitHubs/Maxima/create_tex_article_output_plot2d.pd
 plot3d_filename:"/home/richel/GitHubs/Maxima/create_tex_article_output_plot3d.pdf"$
 
 /* Do the calculations */
-F(x):= f(x) = (0.0001*(x^4)) - (0.001*(x^3)) + (0.01*(x^2)) - (0.1*x) + 1;
+F(x):= f(x) = (0.0001*(x^4)) - (0.002*(x^3)) + (0.03*(x^2)) - (0.4*x) + 1;
 G(x):= g(x) = ''(diff(rhs(F(x)),x));
 H(x,y):= h(x,y) = ''(rhs(F(x)) + rhs(G(y)) );
 

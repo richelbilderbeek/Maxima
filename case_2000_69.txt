@@ -28,7 +28,7 @@ printf(stream,"~%")$
 printf(stream,"\\begin{abstract}~%")$
 printf(stream,"This article is created from within the CAS program Maxima~%")$
 printf(stream,"and converted to PDF by using FOSS tools only, to assess the viability of this pipeline.")$
-printf(stream,"As a testcase, the exercise of \\cite{case2000} (page 69) is used.~%")$
+printf(stream,"As a testcase, an exercise of \\cite{case2000} (page 69) is used.~%")$
 printf(stream,"\\end{abstract}~%")$
 printf(stream,"~%")$
 printf(stream,"\\section{Introduction}~%")$

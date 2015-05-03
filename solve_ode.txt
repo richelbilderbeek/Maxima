@@ -1,0 +1,17 @@
+
+de: 'diff(x,t) = a*x;
+s: ode2(de,x,t);
+
+%c=1;
+a=1;
+print(s);
+png_filename:"/home/richel/GitHubs/Maxima/solve_ode.png";
+
+plot2d(
+  rhs(s),[x,0,1],[y,0,1],
+  [title,string(s)],
+  [xlabel,"x"],
+  [ylabel,"y"],
+  [color,black],
+  [png_file,png_filename]
+);

@@ -1,0 +1,22 @@
+de: 'diff(x,t) = a*x;
+s: ode2(de,x,t);
+
+bye
+
+eqn_1:= 'diff(x,t) = a*x + b*y;
+eqn_2:= 'diff(y,t) + c*x + d*y;
+
+desolve([eqn_1, eqn_2], [x,y]);
+
+%png_filename:"/home/richel/GitHubs/Maxima/plot2d.png"$
+
+%F(x):= f(x) = sin(x);
+
+%plot2d(
+%  rhs(F(x)),[x,-10,10],[y,-1,1],
+%  [title,string(F(x))],
+%  [xlabel,"x (radians)"],
+%  [ylabel,string(rhs(F(x)))],
+%  [color,black],
+%  [png_file,png_filename]
+%);

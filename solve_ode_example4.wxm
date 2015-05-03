@@ -1,0 +1,22 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 13.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+/* Adapted from http://maxima.sourceforge.net/docs/tutorial/en/gaertner-tutorial-revision/Pages/ODE0001.htm */
+/* In a first step we write down the differential equation that we want to solve. */
+/* Note the apostroph in front of the diff. */
+/* It is needed to avoid the immediate computation of a derivative. */
+my_equation: 'diff(x,t) = a*x;
+/* We use ode2 to compute a solution: */
+my_ode_gen: ode2(my_equation,x,t);
+/* The solution contains the integration constant %C. */
+/* To obtain a solution for a selected initial value we use the function ic1 to define the initial condition. */
+/* This initial condition selects the solution that passes through point (t=0,x=1) */
+my_ode_with_a: subst([a=0.1],my_ode_gen);
+my_ode_num: ic1(my_ode_with_a, t=0, x=0.1);
+/* You can now draw the solution */
+plot2d(rhs(my_ode_num),[t,0,8],[x,0,8]);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

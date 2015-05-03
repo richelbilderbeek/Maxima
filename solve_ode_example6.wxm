@@ -1,0 +1,18 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 13.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+/* Adapted from http://maxima.sourceforge.net/docs/tutorial/en/gaertner-tutorial-revision/Pages/ODE0001.htm */
+/* In a first step we write down the differential equation that we want to solve. */
+/* Note the apostroph in front of the diff. */
+/* It is needed to avoid the immediate computation of a derivative. */
+my_equation_1: 'diff(x,t) =  0.1*x - 3;
+my_equation_2: 'diff(y,t) = -0.2*y + 4;
+/* We use ode2 to compute a solution: */
+atvalue(my_equation_1,t=1, 1);
+atvalue(my_equation_2,t=3, 4);
+desolve ([my_equation_1,my_equation_2], [x,y,t]);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$
