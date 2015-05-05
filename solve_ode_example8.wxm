@@ -1,0 +1,42 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 13.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+/* Adapted from http://maxima.sourceforge.net/docs/tutorial/en/gaertner-tutorial-revision/Pages/ode0003.htm */
+/* Differential Equations - Symbolic Solutions */
+/* Continuation */
+
+/* To solve the equation of the previous example with the function desolve, we introduce names for the two equations:*/
+
+diffeq1: 'diff(f(x),x,2) + 'diff(g(x),x) + 3*f(x) = 15*exp(-x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+diff_eq2: 'diff(g(x), x, 2) - 4*'diff(f(x), x) + 3*g(x) = 15*sin(2*x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+/* Now we form a named system of equations: */
+ode_syst: [diff_eq1, diff_eq2];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+/* The initial values are specified in the same manner as in the previous example: */
+atvalue (f(x), x=0, 35);
+atvalue ('diff(f(x),x),x=0, -48);
+atvalue (g(x), x=0, 27);
+atvalue ('diff(g(x), x), x=0, -55);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+/* Now we call desolve: */
+solutions: desolve(ode_syst, [f(x), g(x)]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+/* Plot */
+wxplot2d(rhs(solutions[1]),[x,0,10],[y,-100,100]);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$
